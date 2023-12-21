@@ -1,0 +1,125 @@
+#include <iostream>
+#include <cstdlib>
+#include <windows.h>
+
+using namespace std;
+
+// Khai bao class ChristmasTree
+class ChristmasTree {
+	
+private:
+    int height;
+
+public:
+	
+	// ham tao ChristmasTree
+    ChristmasTree(int h) {
+        height = h;
+    }
+	
+	// Ham ve ChristmasTree
+    void draw() {
+    	
+		// ve lop la cay
+    	for (int i = 0; i < height - 1; i++) 
+		{
+			// ve dau cach de tao hieu ung tam giac nguoc
+        	for (int j = 0; j < height - i - 1; j++) {
+        	    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+        	    cout << " ";
+        	}
+        	
+        	// ve * , so luong * tang dan khi xuong lop la cuoi cung
+        	// 2 * i + 1 la so luong sao tren moi lop la
+        	for (int j = 0; j < 2 * i + 1; j++) {
+        		//bieu thuc dieu kien de chon mau sac ngau nhien cho cac *
+        	    int randomColor = rand() % 2 == 0 ? FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY : FOREGROUND_GREEN | FOREGROUND_INTENSITY;
+        	    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), randomColor);
+        	    cout << "*";
+        	}
+        	cout << endl;
+    	}
+
+		// ve than cay
+    	for (int j = 0; j < 3; j++) {
+    	    for (int i = 0; i < height - 2; i++) {
+    	        cout << " ";
+    	    }
+    	    for (int k = 0; k < 3; k++) {
+    	    	int randomColor = rand() % 2 == 0 ? FOREGROUND_RED : FOREGROUND_RED | FOREGROUND_INTENSITY | FOREGROUND_BLUE;
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), randomColor);
+    	    	cout << "*";
+    	    }
+    	    cout << endl;
+    	}
+	}
+};
+
+// Ham hien thi van ban duoc can giua theo chieu ngang ChristmasTree
+void centerText(const string& text, int width) {
+    int padding = (width - text.length()) / 2;
+    for (int i = 0; i < padding; i++) {
+        cout << " ";
+    }
+    cout << text << endl;
+}
+
+//Ham ve ngoi sao
+void starDraw(int treeWidth) {
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	centerText("*", treeWidth);
+	centerText("***", treeWidth);
+	centerText("*********", treeWidth);
+	centerText("***", treeWidth);
+	centerText("** **", treeWidth);
+	centerText("*     *", treeWidth);
+}
+
+// Ham ve chau cay
+void potDraw(int treeWidth) {
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+	centerText("------------------", treeWidth);
+	
+    int padding = (treeWidth - 18) / 2;
+    for (int i = 0; i < padding; i++) {
+    	cout << " ";
+	}
+	
+	cout << "\\ ";
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_INTENSITY);
+	cout << "MerryChristmas";
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+	cout << " /" << endl;
+	centerText("----------------", treeWidth);
+	centerText("/    Thay Dat    \\", treeWidth);
+	centerText("|   Tran Anh Dat   |", treeWidth);
+	centerText("\\   Number One   /", treeWidth);
+	centerText("\\ ( )  ^^  ( ) /", treeWidth);
+	centerText("--------------", treeWidth);
+}
+
+// ham chinh
+int main() {
+    int treeHeight;
+    cout << "Enter the height of the Christmas tree: ";
+    cin >> treeHeight;
+
+    ChristmasTree tree(treeHeight);
+
+    for (int i = 0; i < 50; i++) {
+        system("cls"); // xoa noi dung cu tren man hinh
+		
+		int treeWidth = treeHeight * 2 - 1;
+		starDraw(treeWidth);
+		
+        tree.draw();
+                
+        potDraw(treeWidth);
+
+        Sleep(200);
+    }
+
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+
+    return 0;
+}
